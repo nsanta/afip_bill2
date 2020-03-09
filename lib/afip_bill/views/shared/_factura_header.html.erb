@@ -154,15 +154,15 @@
 
 <div class="main">
   <div style="left:0px;top:0px">
-    <img src='file://<%= Gem.loaded_specs['afip_bill'].full_gem_path + "/lib/afip_bill/assets/images/factura_#{bill_type}.jpg" %>' width="595px" height="842px">
+    <img src='file://<%= Gem.loaded_specs['afip_bill'].full_gem_path + "/lib/afip_bill/assets/images/factura_#{bill_type == 'c' ? 'b' : bill_type}.jpg" %>' width="595px" height="842px">
 
   </div>
 
   <div style="left:263.78px;top:22.31px" class="cls_003"><span class="cls_003"><%= header_text %></span></div>
   <div style="left:289.84px;top:43.90px" class="cls_009"><span class="cls_009"> <%= bill_type.upcase %> </span></div>
-  <div style="left:341.00px;top:53.33px" class="cls_004"><span class="cls_004">FACTURA</span></div>
+  <div style="left:341.00px;top:53.33px" class="cls_004"><span class="cls_004"><%= AfipBill.configuration[:invoice_type] %></span></div>
   <div style="left:70.00px;top:58.33px" class="cls_004"><span class="cls_004"> <%= AfipBill.configuration[:header_business_name] || AfipBill.configuration[:business_name] %></span></div>
-  <div style="left:282.94px;top:72.04px" class="cls_010"><span class="cls_010">COD. 01</span></div>
+  <div style="left:282.94px;top:72.04px" class="cls_010"><span class="cls_010">COD. <%= afip_bill["cbte_tipo"] %></span></div>
   <div style="left:341.00px;top:84.24px" class="cls_002"><span class="cls_002">Punto de Venta:</span></div>
   <div style="left:417.00px;top:84.04px" class="cls_005"><span class="cls_005"><%= AfipBill.configuration[:sale_point] %></span></div>
   <div style="left:461.00px;top:84.24px" class="cls_002"><span class="cls_002">Comp. Nro:</span></div>
@@ -180,15 +180,15 @@
   <div style="left:482.00px;top:147.41px" class="cls_006"><span class="cls_006"><%= AfipBill.configuration[:business_start_date] %></span></div>
   <div style="left:21.00px;top:150.41px" class="cls_002"><span class="cls_002">Condición frente al IVA: <%= AfipBill.configuration[:iva] %></span></div>
   <div style="left:21.00px;top:169.29px" class="cls_005"><span class="cls_005">Período Facturado Desde:</span></div>
-  <div style="left:159.00px;top:169.29px" class="cls_007"><span class="cls_007"><%= Date.parse(afip_bill["fch_serv_desde"]).strftime("%d/%m/%Y") %></span></div>
-  <div style="left:232.44px;top:169.29px" class="cls_005"><span class="cls_005">Hasta:</span><span class="cls_007"><%= Date.parse(afip_bill["fch_serv_hasta"]).strftime("%d/%m/%Y") %></span></div>
+  <div style="left:159.00px;top:169.29px" class="cls_007"><span class="cls_007"><%= AfipBill.configuration[:fecha_desde] %></span></div>
+  <div style="left:232.44px;top:169.29px" class="cls_005"><span class="cls_005">Hasta:</span><span class="cls_007"><%= AfipBill.configuration[:fecha_hasta] %></span></div>
   <div style="left:362.96px;top:169.29px" class="cls_005"><span class="cls_005">Fecha de Vto. para el pago:</span></div>
-  <div style="left:495.00px;top:169.29px" class="cls_007"><span class="cls_007"><%= Date.parse(afip_bill["fch_serv_hasta"]).strftime("%d/%m/%Y") %></span></div>
-  <div style="left:21.00px;top:189.59px" class="cls_002"><span class="cls_002">CUIT:</span></div>
+  <div style="left:495.00px;top:169.29px" class="cls_007"><span class="cls_007"><%= AfipBill.configuration[:vencimiento] %></span></div>
+  <div style="left:21.00px;top:189.59px" class="cls_002"><span class="cls_002"><%= AfipBill.configuration[:document_type] %></span></div>
   <div style="left:52.00px;top:189.59px" class="cls_006"><span class="cls_006"><%= afip_bill["doc_num"] %></span></div>
   <div style="left:205.97px;top:189.59px" class="cls_002"><span class="cls_002">Apellido y Nombre / Razón Social:</span></div>
   <div style="left:354.00px;top:190.63px" class="cls_008"><span class="cls_008"><%= bill_type == "a" ? user.company_name : user.owner_name %></span></div>
   <div style="left:21.00px;top:208.59px" class="cls_002"><span class="cls_002">Condición frente al IVA:</span></div>
   <div style="left:131.00px;top:208.59px" class="cls_006"><span class="cls_006"><%= user.tax_category %></span></div>
   <div style="width:200px;left:262.48px;top:208.59px" class="cls_002"><span class="cls_002">Domicilio Comercial:</span><span style="width:200px;" class="cls_008"> <%= user.address %></span></div>
-  <div style="left:21.00px;top:229.91px" class="cls_002"><span class="cls_002">Condición de venta:</span><span class="cls_008">  Otra</span></div>
+  <div style="left:21.00px;top:229.91px" class="cls_002"><span class="cls_002">Condición de venta:</span><span class="cls_008">  <%= AfipBill.configuration[:condition_sale] %></span></div>
