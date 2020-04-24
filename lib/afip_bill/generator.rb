@@ -70,7 +70,13 @@ module AfipBill
     end
 
     def template
-      ERB.new(File.read(bill_path)).result(binding)
+      @copy = "ORIGINAL"
+      a = ERB.new(File.read(bill_path)).result(binding)
+      @copy = "DUPLICADO"
+      b = ERB.new(File.read(bill_path)).result(binding)
+      @copy = "TRIPLICADO"
+      b = ERB.new(File.read(bill_path)).result(binding)
+      [a, b, c].join
     end
   end
 end
