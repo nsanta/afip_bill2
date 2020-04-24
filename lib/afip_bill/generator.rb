@@ -19,8 +19,6 @@ module AfipBill
       @user = user
       @bill_type = type_a_or_b_bill
       @line_items = line_items
-      @template_header = ERB.new(File.read(HEADER_PATH)).result(binding)
-      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
       @header_text = header_text
     end
 
@@ -70,11 +68,15 @@ module AfipBill
     end
 
     def template
+      @template_header = ERB.new(File.read(HEADER_PATH)).result(binding)
       @copy = "ORIGINAL"
+      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
       a = ERB.new(File.read(bill_path)).result(binding)
       @copy = "DUPLICADO"
+      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
       b = ERB.new(File.read(bill_path)).result(binding)
       @copy = "TRIPLICADO"
+      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
       b = ERB.new(File.read(bill_path)).result(binding)
       [a, b, c].join
     end
