@@ -4,6 +4,7 @@ require "afip_bill/check_digit"
 require "barby/barcode/code_25_interleaved"
 require "barby/outputter/html_outputter"
 require "pdfkit"
+require "combine_pdf"
 
 module AfipBill
   class Generator
@@ -33,7 +34,8 @@ module AfipBill
     def generate_pdf_file
       tempfile = Tempfile.new("afip_bill.pdf")
 
-      pdfkit_template.to_file(tempfile.path)
+      pdfkit_template.save(tempfile.path)
+      tempfile
     end
 
     def generate_pdf_string
@@ -64,21 +66,19 @@ module AfipBill
     end
 
     def pdfkit_template
-      PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+      @pdfkit_template ||= begin
+        a = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+        @header_text = 'DUPLICADO'
+        b = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+        @header_text = 'TRIPLICADO'
+        c = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+        (CombinePDF.parse(a.to_pdf) << CombinePDF.parse(b.to_pdf) << CombinePDF.parse(c.to_pdf))
+      end
     end
 
     def template
       @template_header = ERB.new(File.read(HEADER_PATH)).result(binding)
-      @copy = "ORIGINAL"
-      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
-      a = ERB.new(File.read(bill_path)).result(binding)
-      @copy = "DUPLICADO"
-      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
-      b = ERB.new(File.read(bill_path)).result(binding)
-      @copy = "TRIPLICADO"
-      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
-      b = ERB.new(File.read(bill_path)).result(binding)
-      [a, b, c].join
+      ERB.new(File.read(bill_path)).result(binding)
     end
   end
 end

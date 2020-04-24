@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<pry-byebug>.freeze, ["~> 3.4.0"])
     s.add_runtime_dependency(%q<barby>.freeze, ["~> 0.6.2"])
     s.add_runtime_dependency(%q<pdfkit>.freeze, ["~> 0.8.2"])
+    s.add_runtime_dependency(%q<combine_pdf>.freeze)
   else
     s.add_dependency(%q<bundler>.freeze, ["~> 1.13"])
     s.add_dependency(%q<rake>.freeze, ["~> 10.0"])
@@ -38,5 +39,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<pry-byebug>.freeze, ["~> 3.4.0"])
     s.add_dependency(%q<barby>.freeze, ["~> 0.6.2"])
     s.add_dependency(%q<pdfkit>.freeze, ["~> 0.8.2"])
+    s.add_dependency(%q<combine_pdf>.freeze)
   end
 end
