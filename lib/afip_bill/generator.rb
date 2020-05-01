@@ -66,14 +66,12 @@ module AfipBill
     end
 
     def pdfkit_template
-      @pdfkit_template ||= begin
-        a = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
-        @header_text = 'DUPLICADO'
-        b = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
-        @header_text = 'TRIPLICADO'
-        c = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
-        (CombinePDF.parse(a.to_pdf) << CombinePDF.parse(b.to_pdf) << CombinePDF.parse(c.to_pdf))
-      end
+      a = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+      @header_text = 'DUPLICADO'
+      b = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+      @header_text = 'TRIPLICADO'
+      c = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
+      (CombinePDF.parse(a.to_pdf) << CombinePDF.parse(b.to_pdf) << CombinePDF.parse(c.to_pdf))
     end
 
     def template
