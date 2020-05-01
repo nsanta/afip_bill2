@@ -39,6 +39,7 @@ module AfipBill
     end
 
     def generate_pdf_string
+      puts 'GENERATING PDF'
       pdfkit_template.to_pdf
     end
 
@@ -71,7 +72,13 @@ module AfipBill
       b = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
       @header_text = 'TRIPLICADO'
       c = PDFKit.new(template, dpi: 400, page_size: "A4", print_media_type: true, margin_bottom: "0.25in", margin_top: "0.25in", margin_left: "0.25in", margin_right: "0.25in", zoom: "1.1")
-      (CombinePDF.parse(a.to_pdf) << CombinePDF.parse(b.to_pdf) << CombinePDF.parse(c.to_pdf))
+      puts 'combining A'
+      combine_a = CombinePDF.parse(a.to_pdf)
+      puts 'combining B'
+      combine_b = CombinePDF.parse(b.to_pdf)
+      puts 'combining C'
+      combine_c = CombinePDF.parse(c.to_pdf)
+      combine_a << combine_b << combine_c
     end
 
     def template
