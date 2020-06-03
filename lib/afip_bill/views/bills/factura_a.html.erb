@@ -14,7 +14,7 @@
 <% top = 283 %>
 <% @line_items.each_with_index do |line_item, index| %>
   <div style="left:18.00px;top:<%= top %>px" class="cls_008"><span class="cls_008"><%= (index + 1).to_s.rjust(3, "0") %></span></div>
-  <div style="left:57.00px;top:<%= top %>px" class="cls_008"><span class="cls_008"><%= line_item.name %></span></div>
+  <div style="width:150px;left:57.00px;top:<%= top %>px" class="cls_008 break-word"><span class="cls_008"><%= line_item.name %></span></div>
   <div style="width:60px;left:37%;top:<%= top %>px" class="cls_008"><span style="position:absolute;right:0" class="cls_008"><%= line_item.quantity.to_s.tr(".", ",") %> </span></div>
   <div style="left:288.30px;top:<%= top %>px" class="cls_012"><span class="cls_012">unidades</span></div>
   <div style="left:360.54px;top:<%= top %>px" class="cls_008"><span class="cls_008"><%= line_item.imp_unitario.to_s.tr(".", ",") %></span></div>
@@ -22,7 +22,7 @@
   <div style="width:60px;left:70.4%;top:<%= top %>px" class="cls_008"><span style="position:absolute;right:0" class="cls_008"><%= line_item.imp_total_unitario.round(2).to_s.tr(".", ",") %></span></div>
   <div style="left:490.00px;top:<%= top %>px" class="cls_008"><span class="cls_008">21%</span></div>
   <div style="width:60px;left:87%;top:<%= top %>px" class="cls_008"><span style="position:absolute;right:0" class="cls_008"><%= line_item.imp_total_unitario_con_iva.round(2).to_s.tr(".", ",") %></span></div>
-  <% top += 25 %>
+  <% top += 25 + (25 * (line_item.name.length / 150)) %>
 <% end %>
 
 <div style="left:17.00px;top:511.97px" class="cls_010"><span class="cls_010">Otros Tributos</span></div>

@@ -83,6 +83,7 @@ module AfipBill
 
     def template
       @template_header = ERB.new(File.read(HEADER_PATH)).result(binding)
+      @template_footer = ERB.new(File.read(FOOTER_PATH)).result(binding)
       ERB.new(File.read(bill_path)).result(binding)
     end
   end
